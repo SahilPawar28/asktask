@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, Smartphone } from "lucide-react";
+import { ANDROID_APK_URL } from "@/lib/constants";
 import { motion } from "framer-motion";
 
 export default function SignupPage() {
@@ -140,6 +141,15 @@ export default function SignupPage() {
           <p className="text-center text-xs text-muted-foreground mt-4">
             By signing up you agree to our Terms and Privacy Policy.
           </p>
+
+          <a
+            href={ANDROID_APK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground hover:text-primary mt-4 transition-colors"
+          >
+            <Smartphone className="h-3.5 w-3.5" /> Prefer the app? Download for Android
+          </a>
         </motion.div>
       </div>
     </div>

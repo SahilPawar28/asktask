@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { getAvatarUrl } from "@/lib/utils";
+import { ImageLightbox } from "@/components/ImageLightbox";
 
 interface AnnotatedMessage extends ChatMessage {
   taskId: string;
@@ -50,6 +51,7 @@ export default function MessagesPage() {
   const [uploadingImg, setUploadingImg] = useState(false);
   const [loadingConvos, setLoadingConvos] = useState(true);
   const [showTaskPicker, setShowTaskPicker] = useState(false);
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -367,7 +369,8 @@ export default function MessagesPage() {
                               <img
                                 src={msg.imageUrl}
                                 alt="Shared"
-                                className={`rounded-2xl max-w-full object-cover ${isMe ? "rounded-br-md" : "rounded-bl-md"}`}
+                                onClick={() => setLightboxSrc(msg.imageUrl!)}
+                                className={`rounded-2xl max-w-full object-cover cursor-zoom-in hover:opacity-90 transition-opacity ${isMe ? "rounded-br-md" : "rounded-bl-md"}`}
                               />
                             ) : (
                               <div
@@ -464,6 +467,8 @@ export default function MessagesPage() {
           </div>
         </div>
       </div>
+      <ImageLightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />
+
       <MobileNav />
     </div>
   );

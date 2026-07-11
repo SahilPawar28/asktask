@@ -3,7 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Navbar } from "@/components/Navbar";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, Clock, MapPin, Shield, Star, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle, Clock, MapPin, Shield, Star, Zap, Smartphone } from "lucide-react";
+import { ANDROID_APK_URL } from "@/lib/constants";
 
 const steps = [
   { icon: "📝", title: "Post a Task", description: "Describe what you need done, set a price, and post it." },
@@ -72,6 +73,15 @@ export default function LandingPage() {
                 </Button>
               </Link>
             </div>
+
+            <a
+              href={ANDROID_APK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 text-sm font-medium text-foreground transition-colors"
+            >
+              <Smartphone className="h-4 w-4 text-primary" /> Also available on Android — Download the app
+            </a>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-2xl mx-auto">
               {stats.map((stat, i) => (

@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.asktask.app",
+      "sha256_cert_fingerprints": [
+        "69:60:19:47:FE:D6:04:9D:F6:D0:65:CB:9D:D6:36:BA:22:CC:75:EA:76:6A:1E:DA:CB:68:ED:85:15:8E:53:EB"
+      ]
+    }
+  }
+]

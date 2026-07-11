@@ -28,8 +28,8 @@ const App = () => (
         <Toaster />
         <Sonner />
         <AuthProvider>
-          <NotificationProvider>
-            <BrowserRouter>
+          <BrowserRouter>
+            <NotificationProvider>
               <Routes>
                 {/* Public */}
                 <Route path="/" element={<LandingPage />} />
@@ -49,8 +49,8 @@ const App = () => (
 
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </BrowserRouter>
-          </NotificationProvider>
+            </NotificationProvider>
+          </BrowserRouter>
         </AuthProvider>
       </TooltipProvider>
     </QueryClientProvider>

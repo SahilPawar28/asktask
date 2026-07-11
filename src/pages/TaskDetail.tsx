@@ -25,6 +25,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { PaymentModal } from "@/components/PaymentModal";
 import { RatingModal } from "@/components/RatingModal";
+import { ImageLightbox } from "@/components/ImageLightbox";
 import { uploadImage } from "@/lib/cloudinary";
 
 const STATUS_STEPS = ["open", "accepted", "in_progress", "completed", "verified", "paid"];
@@ -45,6 +46,7 @@ export default function TaskDetail() {
   const [uploadingProof, setUploadingProof] = useState(false);
   const [archiving, setArchiving] = useState(false);
   const [alreadyReviewed, setAlreadyReviewed] = useState(false);
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id || !user) return;
@@ -247,7 +249,13 @@ export default function TaskDetail() {
               {task.imageUrls && task.imageUrls.length > 0 && (
                 <div className="mt-6 grid grid-cols-3 gap-2">
                   {task.imageUrls.map((url, i) => (
-                    <img key={i} src={url} alt="Task" className="rounded-xl object-cover aspect-square" />
+                    <img
+                      key={i}
+                      src={url}
+                      alt="Task"
+                      className="rounded-xl object-cover aspect-square cursor-zoom-in hover:opacity-90 transition-opacity"
+                      onClick={() => setLightboxSrc(url)}
+                    />
                   ))}
                 </div>
               )}
@@ -265,7 +273,13 @@ export default function TaskDetail() {
                 <h3 className="font-display font-semibold text-foreground mb-4">Proof of Completion</h3>
                 <div className="grid grid-cols-3 gap-2">
                   {task.proofUrls.map((url, i) => (
-                    <img key={i} src={url} alt="Proof" className="rounded-xl object-cover aspect-square" />
+                    <img
+                      key={i}
+                      src={url}
+                      alt="Proof"
+                      className="rounded-xl object-cover aspect-square cursor-zoom-in hover:opacity-90 transition-opacity"
+                      onClick={() => setLightboxSrc(url)}
+                    />
                   ))}
                 </div>
               </div>
@@ -342,6 +356,13 @@ export default function TaskDetail() {
               {task.status === "completed" && isCreator && (
                 <Button variant="hero" className="w-full gap-2" size="lg" onClick={handleVerify}>
                   <CheckCircle className="h-4 w-4" /> Verify & Pay
+                </Button>
+              )}
+
+              {/* Verified but not yet paid — creator can reopen payment (e.g. if the modal was dismissed) */}
+              {task.status === "verified" && isCreator && (
+                <Button variant="hero" className="w-full gap-2" size="lg" onClick={() => setShowPayment(true)}>
+                  <CheckCircle className="h-4 w-4" /> Release Payment ₹{task.payment}
                 </Button>
               )}
 
@@ -431,6 +452,8 @@ export default function TaskDetail() {
           onClose={() => { setShowRating(false); setAlreadyReviewed(true); }}
         />
       )}
+
+      <ImageLightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />
 
       <MobileNav />
     </div>
